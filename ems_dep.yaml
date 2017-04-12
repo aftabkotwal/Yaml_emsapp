@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: emsapp-deployment
+  labels:
+    app: emsapp
+spec:
+  template:
+    metadata:
+      labels:
+        app: emsapp
+        tier: frontend
+    spec:
+      containers:
+      - image: pushpendrad/emsapp:v3
+        name: emsapp
+        env:
+        - name: DRIVERCLASSNAME
+          value: com.mysql.jdbc.Driver
+        - name: DIALECT
+          value: org.hibernate.dialect.MySQLDialect
+        - name: DATABASEURL
+          value: jdbc:mysql://mysql-service:3306/test
+        - name:  DBUSERNAME
+          value: root
+        - name:  DBPASSWORD
+          value: root
+        ports:
+        - containerPort: 8080
+          name: emsapp
